@@ -53,7 +53,7 @@ export interface AppActions {
 const initialState: AppState = {
   step: 'landing',
   format: 'builderId',
-  photoSrc: null,
+  photoSrc: '/default_avatar.svg',
   name: '',
   stack: '',
   builderClass: getRandomBuilderClass(),
