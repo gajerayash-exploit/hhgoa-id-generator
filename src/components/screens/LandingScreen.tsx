@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useAppStore } from '../../store/useAppStore';
+import { ResponsivePassPreview } from '../ResponsivePassPreview';
 
 export function LandingScreen() {
   const setStep = useAppStore((s) => s.setStep);
@@ -99,85 +100,8 @@ export function LandingScreen() {
             style={{ background: 'rgba(160,211,166,0.12)' }} />
 
           {/* The Ticket */}
-          <div className="ticket-tilt relative w-full max-w-[420px] paper-grain border-2 flex flex-row shadow-2xl overflow-hidden"
-            style={{ borderColor: 'var(--color-gold)', boxShadow: '6px 6px 0 0 var(--color-gold)' }}>
-
-            {/* Left (70%) */}
-            <div className="flex-[7] p-6 flex flex-col justify-between relative z-10">
-              {/* Watermark */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-                style={{ zIndex: 0 }}>
-                <span className="font-display font-black"
-                  style={{ fontSize: '7rem', color: 'rgba(0,0,0,0.04)', transform: 'rotate(-15deg)' }}>
-                  गोवा
-                </span>
-              </div>
-
-              <div className="relative z-10">
-                <div className="flex justify-between items-start mb-5">
-                  <span className="font-display font-bold text-base tracking-tight"
-                    style={{ color: 'var(--color-surface-container-lowest)' }}>HH GOA '26</span>
-                  <span style={{ fontSize: '1.25rem' }}>✈</span>
-                </div>
-
-                <div className="mb-4">
-                  <div className="font-mono-data text-xs font-bold tracking-widest uppercase mb-1"
-                    style={{ color: 'var(--color-outline-variant)', fontFamily: 'var(--font-mono)' }}>PASSENGER NAME</div>
-                  <div className="font-mono-data font-bold text-lg"
-                    style={{ color: 'var(--color-surface-container-lowest)', fontFamily: 'var(--font-mono)' }}>BUILDER_0X</div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  {[['FROM','EARTH'],['TO','GOA']].map(([l,v]) => (
-                    <div key={l}>
-                      <div className="font-mono-data text-xs font-bold tracking-widest uppercase mb-0.5"
-                        style={{ color: 'var(--color-outline-variant)', fontFamily: 'var(--font-mono)' }}>{l}</div>
-                      <div className="font-display font-bold text-xl"
-                        style={{ color: 'var(--color-surface-container-lowest)' }}>{v}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Vertical perf divider */}
-            <div className="w-0 border-l-2 border-dashed my-4 relative"
-              style={{ borderColor: 'var(--color-outline-variant)' }}>
-              <div className="absolute -top-5 -left-2 w-4 h-4 rounded-full"
-                style={{ background: 'var(--color-jungle)' }} />
-              <div className="absolute -bottom-5 -left-2 w-4 h-4 rounded-full"
-                style={{ background: 'var(--color-jungle)' }} />
-            </div>
-
-            {/* Right (30%) stub */}
-            <div className="flex-[3] p-4 flex flex-col items-center justify-between relative z-10">
-              <div className="text-center">
-                <div className="font-mono-data text-xs font-bold tracking-widest uppercase mb-0.5"
-                  style={{ color: 'var(--color-outline-variant)', fontFamily: 'var(--font-mono)' }}>BOARDING</div>
-                <div className="font-display font-bold text-xl" style={{ color: 'var(--color-secondary)' }}>TBD</div>
-              </div>
-              <div className="text-center border-t-2 border-dashed pt-2 w-full"
-                style={{ borderColor: 'var(--color-outline-variant)' }}>
-                <div className="font-mono-data text-xs font-bold tracking-widest uppercase mb-0.5"
-                  style={{ color: 'var(--color-outline-variant)', fontFamily: 'var(--font-mono)' }}>GATE</div>
-                <div className="font-display font-bold text-xl"
-                  style={{ color: 'var(--color-surface-container-lowest)' }}>26</div>
-              </div>
-              {/* Barcode placeholder */}
-              <div className="w-full mt-2 flex flex-col items-center">
-                <div className="w-full h-12 flex items-stretch gap-px">
-                  {[5,2,8,3,6,2,9,1,4,7,2,5,8].map((v,i) => (
-                    i % 2 === 0 ? (
-                      <div key={i} style={{ flex: v, background: 'var(--color-surface-container-lowest)' }} />
-                    ) : (
-                      <div key={i} style={{ flex: v }} />
-                    )
-                  ))}
-                </div>
-                <div className="font-mono-data text-xs mt-1 tracking-widest"
-                  style={{ color: 'var(--color-outline-variant)', fontFamily: 'var(--font-mono)', fontSize: '7px' }}>G-2026-HH</div>
-              </div>
-            </div>
+          <div className="ticket-tilt relative w-full max-w-[420px]">
+             <ResponsivePassPreview className="shadow-2xl" style={{ pointerEvents: 'none' }} />
           </div>
         </motion.div>
       </main>

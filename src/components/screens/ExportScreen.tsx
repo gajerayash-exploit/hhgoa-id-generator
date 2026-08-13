@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { saveAs } from 'file-saver';
+import { toBlob, toPng } from 'html-to-image';
 import { useAppStore } from '../../store/useAppStore';
-import { drawCard, CARD_DIMS } from '../../lib/composite';
+import { PassTemplate } from '../PassTemplate';
 
 const CAPTION = 'Just generated my official @247pmstudio Hacker House Goa 2026 builder pass! 🌴⚡ #FrameInGoa';
 
@@ -39,48 +40,42 @@ export function ExportScreen() {
   const squadMode = useAppStore((s) => s.squadMode);
   const name      = useAppStore((s) => s.name);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [generating, setGenerating] = useState(false);
+  const templateRef = useRef<HTMLDivElement>(null);
+  const [generating, setGenerating] = useState(true);
   const [done, setDone] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [shareHint, setShareHint] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const renderFinalCard = useCallback(async () => {
-    if (!canvasRef.current) return;
+    if (!templateRef.current) return;
     setGenerating(true);
-    const s = useAppStore.getState();
     try {
-      await drawCard(canvasRef.current, {
-        photoSrc:     s.photoSrc,
-        name:         s.name,
-        stack:        s.stack,
-        builderClass: s.builderClass,
-        skin:         s.skin,
-        format:       s.format,
-        panX:         s.panX,
-        panY:         s.panY,
-        scale:        s.scale,
-        squadMode:    s.squadMode,
-        teammates:    s.teammates,
-      });
+      // Give the DOM a tiny bit of time to render images (like QR code)
+      await new Promise(r => setTimeout(r, 800));
+      const dataUrl = await toPng(templateRef.current, { cacheBust: true, quality: 0.95 });
+      setPreviewUrl(dataUrl);
       setDone(true);
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
+    } catch (err) {
+      console.error('Failed to generate pass', err);
     } finally {
       setGenerating(false);
     }
-  }, []); // stable - reads fresh state inside
+  }, []);
 
   useEffect(() => {
     renderFinalCard();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [renderFinalCard]);
 
-  const getBlob = (): Promise<Blob> =>
-    new Promise((res, rej) => {
-      if (!canvasRef.current) return rej(new Error('No canvas'));
-      canvasRef.current.toBlob((b) => b ? res(b) : rej(new Error('toBlob failed')), 'image/png');
-    });
+  const getBlob = async (): Promise<Blob> => {
+    if (!templateRef.current) throw new Error('No template');
+    const blob = await toBlob(templateRef.current, { cacheBust: true, quality: 0.95 });
+    if (!blob) throw new Error('toBlob failed');
+    return blob;
+  };
 
   const slug = (name || 'builder').toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const filename = `hhgoa-builder-pass-${slug}.png`;
@@ -116,8 +111,7 @@ export function ExportScreen() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const dims = squadMode ? CARD_DIMS.squad
-    : format === 'pfp' ? CARD_DIMS.pfp : CARD_DIMS.builderId;
+  const dims = { w: 1080, h: 1350 };
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-jungle)' }}>
@@ -152,9 +146,14 @@ export function ExportScreen() {
             </span>
           </div>
 
-          <div className="relative">
+          <div className="relative flex justify-center">
+            {/* Hidden DOM element used for generation */}
+            <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
+              <PassTemplate ref={templateRef} />
+            </div>
+
             {generating && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded-lg"
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded-lg w-full h-full min-h-[400px]"
                 style={{ background: 'rgba(21,19,11,0.7)', backdropFilter: 'blur(8px)' }}>
                 <div className="w-12 h-12 border-4 rounded-full animate-spin"
                   style={{ borderColor: 'var(--color-secondary)', borderTopColor: 'transparent' }} />
@@ -163,14 +162,17 @@ export function ExportScreen() {
                 </p>
               </div>
             )}
-            <motion.canvas
-              ref={canvasRef}
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: done ? 1 : 0.95, opacity: done ? 1 : 0 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              className="w-full h-auto rounded-lg card-glow"
-              style={{ maxHeight: '70vh', objectFit: 'contain' }}
-            />
+            
+            {previewUrl && (
+              <motion.img
+                src={previewUrl}
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: done ? 1 : 0.95, opacity: done ? 1 : 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                className="w-full h-auto rounded-lg card-glow shadow-2xl"
+                style={{ maxHeight: '70vh', objectFit: 'contain' }}
+              />
+            )}
           </div>
 
           {done && (

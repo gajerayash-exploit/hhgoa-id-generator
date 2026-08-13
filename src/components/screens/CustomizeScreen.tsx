@@ -2,8 +2,8 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { useAppStore, type SkinFilter } from '../../store/useAppStore';
-import { drawCard } from '../../lib/composite';
 import { processImageFile } from '../../lib/heic';
+import { ResponsivePassPreview } from '../ResponsivePassPreview';
 
 
 const SKINS: { id: SkinFilter; label: string; emoji: string; desc: string }[] = [
@@ -40,45 +40,13 @@ export function CustomizeScreen() {
   const teammates    = useAppStore((s) => s.teammates);
   const format       = useAppStore((s) => s.format);
 
-  const canvasRef   = useRef<HTMLCanvasElement>(null);
-  const renderTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [isRendering, setIsRendering] = useState(false);
   const [rerolling,   setRerolling]   = useState(false);
   const [tmUploadLoading, setTmUploadLoading] = useState<string | null>(null);
 
-  // Debounced render — reads fresh snapshot via getState() to avoid stale closures
-  const scheduleRender = useCallback(() => {
-    if (renderTimer.current) clearTimeout(renderTimer.current);
-    renderTimer.current = setTimeout(async () => {
-      if (!canvasRef.current) return;
-      setIsRendering(true);
-      const s = useAppStore.getState();
-      try {
-        await drawCard(canvasRef.current, {
-          photoSrc:     s.photoSrc,
-          name:         s.name,
-          stack:        s.stack,
-          builderClass: s.builderClass,
-          skin:         s.skin,
-          format:       s.format,
-          panX:         s.panX,
-          panY:         s.panY,
-          scale:        s.scale,
-          squadMode:    s.squadMode,
-          teammates:    s.teammates,
-        });
-      } finally {
-        setIsRendering(false);
-      }
-    }, 100);
-  }, []); // stable — only called, never closes over changing state
-
+  // No need for debounced render since we use React DOM directly
   useEffect(() => {
-    scheduleRender();
-    return () => { if (renderTimer.current) clearTimeout(renderTimer.current); };
-  // Re-render when any card property changes
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, stack, builderClass, skin, format, panX, panY, scale, squadMode, teammates]);
+    // any side effects if needed
+  }, []);
 
   // Canvas pan
   const isDragging = useRef(false);
@@ -91,11 +59,10 @@ export function CustomizeScreen() {
   };
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging.current) return;
-    const rect = canvasRef.current?.getBoundingClientRect();
-    const sf = rect ? rect.height / 1350 : 1;
     const { panX: px, panY: py, scale: sc } = useAppStore.getState();
-    const dx = (e.clientX - lastPos.current.x) / (960 * sf * sc);
-    const dy = (e.clientY - lastPos.current.y) / (1200 * sf * sc);
+    const currentContainerWidth = (e.currentTarget as HTMLElement).getBoundingClientRect().width;
+    const dx = (e.clientX - lastPos.current.x) / (currentContainerWidth * sc);
+    const dy = (e.clientY - lastPos.current.y) / (currentContainerWidth * (1350/1080) * sc);
     lastPos.current = { x: e.clientX, y: e.clientY };
     setPan(px + dx, py + dy);
   };
@@ -153,24 +120,14 @@ export function CustomizeScreen() {
             </span>
           </div>
 
-          <div className="relative">
-            {isRendering && (
-              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg"
-                style={{ background: 'rgba(21,19,11,0.4)' }}>
-                <div className="w-8 h-8 rounded-full border-4 animate-spin"
-                  style={{ borderColor: 'var(--color-secondary)', borderTopColor: 'transparent' }} />
-              </div>
-            )}
-            <canvas
-              ref={canvasRef}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-              className="w-full h-auto rounded-lg card-glow"
-              style={{ touchAction: 'none', cursor: 'grab', maxHeight: '70vh', objectFit: 'contain' }}
-            />
-          </div>
+          <ResponsivePassPreview 
+            className="shadow-2xl card-glow"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            style={{ touchAction: 'none', cursor: 'grab' }}
+          />
 
           <p className="font-mono-data text-xs text-center"
             style={{ color: 'rgba(193,201,190,0.6)', fontFamily: 'var(--font-mono)' }}>

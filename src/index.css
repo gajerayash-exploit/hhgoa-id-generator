@@ -10,44 +10,44 @@
 
 @theme {
   /* Brand Color Tokens */
-  --color-jungle: #1e4d2b;
-  --color-jungle-dark: #15130b;
-  --color-gold: #d9a441;
-  --color-gold-light: #f5bd58;
-  --color-gold-dim: #976a00;
-  --color-cream: #F5EFE0;
-  --color-teal: #2dd4bf;
-  --color-teal-dark: #004d44;
+  --color-jungle: #015B37;
+  --color-jungle-dark: #004629;
+  --color-gold: #FFE600;
+  --color-gold-light: #FFF04D;
+  --color-gold-dim: #D4BE00;
+  --color-cream: #FAF6EE;
+  --color-teal: #FF007F;
+  --color-teal-dark: #C90064;
 
   /* Material Surface tokens */
-  --color-surface: #15130b;
-  --color-surface-bright: #3c392f;
-  --color-surface-container-lowest: #100e06;
-  --color-surface-container-low: #1d1c13;
-  --color-surface-container: #222017;
-  --color-surface-container-high: #2c2a20;
-  --color-surface-container-highest: #37352b;
-  --color-on-surface: #e8e2d3;
-  --color-on-surface-variant: #c1c9be;
-  --color-inverse-surface: #e8e2d3;
-  --color-inverse-on-surface: #333027;
-  --color-outline: #8b9389;
-  --color-outline-variant: #414941;
-  --color-primary: #a0d3a6;
-  --color-primary-container: #1e4d2b;
-  --color-on-primary: #053919;
-  --color-primary-fixed-dim: #a0d3a6;
-  --color-secondary: #f5bd58;
-  --color-secondary-container: #976a00;
-  --color-on-secondary: #422c00;
-  --color-on-secondary-container: #fff7f0;
-  --color-on-secondary-fixed-variant: #5f4100;
-  --color-tertiary: #3cddc7;
-  --color-tertiary-container: #004d44;
-  --color-on-tertiary: #003731;
-  --color-background: #15130b;
-  --color-on-background: #e8e2d3;
-  --color-surface-variant: #37352b;
+  --color-surface: #015B37;
+  --color-surface-bright: #016940;
+  --color-surface-container-lowest: #003620;
+  --color-surface-container-low: #004629;
+  --color-surface-container: #015B37;
+  --color-surface-container-high: #016E43;
+  --color-surface-container-highest: #02824F;
+  --color-on-surface: #FAF6EE;
+  --color-on-surface-variant: #C2D5CD;
+  --color-inverse-surface: #FAF6EE;
+  --color-inverse-on-surface: #015B37;
+  --color-outline: #8BA89C;
+  --color-outline-variant: #568471;
+  --color-primary: #FFE600;
+  --color-primary-container: #D4BE00;
+  --color-on-primary: #015B37;
+  --color-primary-fixed-dim: #FF007F;
+  --color-secondary: #FF007F;
+  --color-secondary-container: #C90064;
+  --color-on-secondary: #FAF6EE;
+  --color-on-secondary-container: #FFF7F0;
+  --color-on-secondary-fixed-variant: #800040;
+  --color-tertiary: #FFE600;
+  --color-tertiary-container: #D4BE00;
+  --color-on-tertiary: #015B37;
+  --color-background: #015B37;
+  --color-on-background: #FAF6EE;
+  --color-surface-variant: #016E43;
 
   /* Typography Families */
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
