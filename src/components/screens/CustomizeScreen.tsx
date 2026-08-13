@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { useAppStore, type SkinFilter } from '../../store/useAppStore';
@@ -34,11 +34,9 @@ export function CustomizeScreen() {
   const builderClass = useAppStore((s) => s.builderClass);
   const skin         = useAppStore((s) => s.skin);
   const scale        = useAppStore((s) => s.scale);
-  const panX         = useAppStore((s) => s.panX);
-  const panY         = useAppStore((s) => s.panY);
   const squadMode    = useAppStore((s) => s.squadMode);
   const teammates    = useAppStore((s) => s.teammates);
-  const format       = useAppStore((s) => s.format);
+  
 
   const [rerolling,   setRerolling]   = useState(false);
   const [tmUploadLoading, setTmUploadLoading] = useState<string | null>(null);
