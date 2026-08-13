@@ -35,7 +35,7 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
     <div
       ref={ref}
       // Fixed aspect ratio box exactly matching 1080x1350
-      style={{ width: '1080px', height: '1350px', position: 'relative', overflow: 'hidden', backgroundColor: '#fcf6eb' }}
+      style={{ width: '1080px', height: '1350px', position: 'relative', overflow: 'hidden', backgroundColor: 'var(--color-cream)' }}
     >
       {/* Background Image */}
       <img
@@ -50,21 +50,22 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
         
         {/* HACKER GOA HOUSE Title */}
         <div className="absolute top-[220px] w-full text-center flex items-center justify-center gap-6 drop-shadow-md">
-          <span className="text-7xl font-bold text-[#015B37]" style={{ fontFamily: 'Georgia, serif', transform: 'scaleY(1.4)', letterSpacing: '0.05em' }}>HACKER</span>
-          <span className="text-8xl font-bold text-[#FF007F]" style={{ fontFamily: 'Georgia, serif', transform: 'rotate(-5deg) translateY(-5px)', textShadow: '3px 3px 0px #FFE600' }}>गोवा</span>
-          <span className="text-7xl font-bold text-[#015B37]" style={{ fontFamily: 'Georgia, serif', transform: 'scaleY(1.4)', letterSpacing: '0.05em' }}>HOUSE</span>
+          <span className="text-7xl font-bold" style={{ color: 'var(--color-ocean)', fontFamily: 'Georgia, serif', transform: 'scaleY(1.4)', letterSpacing: '0.05em' }}>HACKER</span>
+          <span className="text-8xl font-bold" style={{ color: 'var(--color-neon)', fontFamily: 'Georgia, serif', transform: 'rotate(-5deg) translateY(-5px)', textShadow: `3px 3px 0px var(--color-gold)` }}>गोवा</span>
+          <span className="text-7xl font-bold" style={{ color: 'var(--color-ocean)', fontFamily: 'Georgia, serif', transform: 'scaleY(1.4)', letterSpacing: '0.05em' }}>HOUSE</span>
         </div>
 
         {/* Profile Photo Hole */}
         <div 
-          className="absolute rounded-full overflow-hidden border-[12px] border-[#FFE600] shadow-2xl bg-[#015B37]"
+          className="absolute rounded-full overflow-hidden border-[12px] shadow-2xl"
           style={{
             top: '380px', 
             left: '50%',
             transform: 'translateX(-50%)',
             width: '450px', 
             height: '450px',
-            boxShadow: '0 0 0 6px #FF007F, 0 20px 40px rgba(0,0,0,0.3)'
+            borderColor: 'var(--color-gold)',
+            background: 'var(--color-ocean)'
           }}
         >
           {photoSrc ? (
@@ -85,7 +86,8 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
 
         {/* Name Pill */}
         <div className="absolute top-[850px] flex flex-col items-center w-[800px]">
-          <div className="bg-[#FAF6EE] border-4 border-[#015B37] rounded-[40px] px-16 py-4 w-full shadow-[6px_6px_0px_0px_#FFE600] relative overflow-hidden flex justify-between items-center transform -rotate-1">
+          <div className="bg-var border-4 rounded-[40px] px-16 py-4 w-full shadow-[6px_6px_0px_0px_var(--color-gold)] relative overflow-hidden flex justify-between items-center transform -rotate-1"
+            style={{ background: 'var(--color-cream)', borderColor: 'var(--color-ocean)'}}>
             {/* Corner Stars */}
             <span className="text-[#FF007F] text-3xl">✦</span>
             <span className="text-5xl font-black tracking-widest text-[#015B37] mx-auto font-display">{displayName}</span>
@@ -96,9 +98,10 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
           </div>
 
           {/* Stack Banner */}
-          <div className="bg-[#FFE600] border-x-4 border-b-4 border-[#015B37] w-[500px] h-16 mt-[-10px] rounded-b-xl flex items-center justify-center shadow-md relative z-[-1]">
+          <div className="bg-var w-[500px] h-16 mt-[-10px] rounded-b-xl flex items-center justify-center shadow-md relative z-[-1]"
+            style={{ background: 'var(--color-gold)', borderColor: 'var(--color-ocean)', borderStyle: 'solid', borderWidth: '0 4px 4px 0' }}>
              <span className="absolute left-6 text-black text-2xl font-bold">⚡</span>
-             <span className="text-3xl font-black text-[#FF007F] tracking-widest">{displayStack}</span>
+             <span className="text-3xl font-black" style={{ color: 'var(--color-neon)', letterSpacing: '0.12em' }}>{displayStack}</span>
              <span className="absolute right-6 text-black text-2xl font-bold">⚡</span>
           </div>
         </div>
@@ -110,7 +113,7 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
             <span className="text-sm font-bold tracking-widest text-[#015B37] mb-2 bg-[#FFE600] px-2 py-1 rounded">✦ BUILDER CLASS ✦</span>
             <span className="text-2xl font-black text-[#FF007F] tracking-widest text-center w-40 leading-tight mt-2">{displayClass}</span>
             {/* QR Code */}
-            <div className="mt-4 p-2 bg-[#FAF6EE] rounded-lg shadow-[4px_4px_0px_0px_#015B37] border-2 border-[#015B37]">
+            <div className="mt-4 p-2 rounded-lg" style={{ background: 'var(--color-cream)', boxShadow: '4px 4px 0px 0px var(--color-ocean)', border: '2px solid var(--color-ocean)' }}>
               <img ref={qrRef} className="w-24 h-24" />
             </div>
           </div>
@@ -139,9 +142,9 @@ export const PassTemplate = forwardRef<HTMLDivElement, object>((_, ref) => {
             <span className="text-sm font-bold tracking-widest text-[#015B37] mb-2 bg-[#FFE600] px-2 py-1 rounded">✦ SHIPPING ✦</span>
             <span className="text-2xl font-black text-[#FF007F] tracking-widest text-center w-48 leading-tight mt-2">BUILDING<br/>THE FUTURE</span>
             
-            <div className="mt-8 flex flex-col items-center w-full bg-[#FAF6EE] p-3 rounded-lg border-2 border-[#015B37] shadow-[4px_4px_0px_0px_#015B37] transform rotate-2">
-               <span className="text-xs font-bold tracking-widest text-[#FF007F]">BUILDER ID</span>
-               <span className="text-lg font-bold text-[#015B37]">#HH-GOA-{Math.floor(Math.random() * 9000 + 1000)}</span>
+            <div className="mt-8 flex flex-col items-center w-full p-3 rounded-lg transform rotate-2" style={{ background: 'var(--color-cream)', border: '2px solid var(--color-ocean)', boxShadow: '4px 4px 0px 0px var(--color-ocean)'}}>
+               <span className="text-xs font-bold tracking-widest" style={{ color: 'var(--color-neon)' }}>BUILDER ID</span>
+               <span className="text-lg font-bold" style={{ color: 'var(--color-ocean)' }}>#HH-GOA-{Math.floor(Math.random() * 9000 + 1000)}</span>
                <div className="mt-2 h-12 w-full overflow-hidden">
                  <Barcode />
                </div>

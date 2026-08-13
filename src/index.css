@@ -1,57 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 
 /* ==========================================
-   BOARDINGOA DESIGN SYSTEM
-   Aeronaut-Goa 2026 — Tactile Minimalism
-   Stitch Design Spec: jungle #1E4D2B / gold #D9A441 / cream #F5EFE0 / teal #2DD4BF
+   GOA HACKER THEME
+   Beach + Neon — sand, ocean, sunset, neon accents
    ========================================== */
 
 @theme {
   /* Brand Color Tokens */
-  --color-jungle: #015B37;
-  --color-jungle-dark: #004629;
-  --color-gold: #FFE600;
-  --color-gold-light: #FFF04D;
-  --color-gold-dim: #D4BE00;
-  --color-cream: #FAF6EE;
-  --color-teal: #FF007F;
-  --color-teal-dark: #C90064;
+  --color-sand: #F9EBD7;
+  --color-ocean: #0B3A5F;
+  --color-ocean-deep: #052737;
+  --color-sunset: #FF6B6B;
+  --color-neon: #FF3CAC;
+  --color-teal: #00C2A8;
+  --color-gold: #FFD166;
+  --color-cream: #FFF7EC;
 
-  /* Material Surface tokens */
-  --color-surface: #015B37;
-  --color-surface-bright: #016940;
-  --color-surface-container-lowest: #003620;
-  --color-surface-container-low: #004629;
-  --color-surface-container: #015B37;
-  --color-surface-container-high: #016E43;
-  --color-surface-container-highest: #02824F;
-  --color-on-surface: #FAF6EE;
-  --color-on-surface-variant: #C2D5CD;
-  --color-inverse-surface: #FAF6EE;
-  --color-inverse-on-surface: #015B37;
-  --color-outline: #8BA89C;
-  --color-outline-variant: #568471;
-  --color-primary: #FFE600;
-  --color-primary-container: #D4BE00;
-  --color-on-primary: #015B37;
-  --color-primary-fixed-dim: #FF007F;
-  --color-secondary: #FF007F;
-  --color-secondary-container: #C90064;
-  --color-on-secondary: #FAF6EE;
-  --color-on-secondary-container: #FFF7F0;
-  --color-on-secondary-fixed-variant: #800040;
-  --color-tertiary: #FFE600;
-  --color-tertiary-container: #D4BE00;
-  --color-on-tertiary: #015B37;
-  --color-background: #015B37;
-  --color-on-background: #FAF6EE;
-  --color-surface-variant: #016E43;
+  /* Material Surface tokens (mapped to new palette) */
+  --color-surface: var(--color-ocean);
+  --color-surface-bright: var(--color-ocean-deep);
+  --color-on-surface: var(--color-sand);
+  --color-on-surface-variant: rgba(255,255,255,0.75);
+  --color-inverse-surface: var(--color-cream);
+  --color-inverse-on-surface: var(--color-ocean);
+  --color-outline: rgba(11,58,95,0.7);
+  --color-outline-variant: rgba(11,58,95,0.45);
+  --color-primary: var(--color-gold);
+  --color-primary-container: #FFEDC3;
+  --color-on-primary: var(--color-ocean);
+  --color-secondary: var(--color-neon);
+  --color-secondary-container: #FFB0E0;
+  --color-on-secondary: var(--color-cream);
+  --color-tertiary: var(--color-teal);
+  --color-background: linear-gradient(180deg, #072B3A 0%, #0B3A5F 60%, #073444 100%);
+  --color-on-background: var(--color-cream);
 
   /* Typography Families */
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-sans: var(--font-display);
 }
